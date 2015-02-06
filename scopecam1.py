@@ -18,7 +18,7 @@ from subprocess import call
 
 # Globals
 
-sizeMode        =  0      # Image size; default = Large
+#sizeMode        =  0      # Image size; default = Large
 sizeData = [ # Camera parameters for different size settings
  # Full res      Viewfinder  Crop window
  [(2592, 1944), (320, 240), (0.0   , 0.0   , 1.0   , 1.0   )], # Large
@@ -39,7 +39,7 @@ screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
  
 camera            = picamera.PiCamera()
 atexit.register(camera.close)
-camera.resolution = sizeData[sizeMode][1]
+camera.resolution = sizeData[0][1]
 camera.crop       = (0.0, 0.0, 1.0, 1.0)
 
 # Main
@@ -50,12 +50,10 @@ while(True):
   stream.seek(0)
   stream.readinto(yuv)  # stream -> YUV buffer
   stream.close()
-  yuv2rgb.convert(yuv, rgb, sizeData[sizeMode][1][0], sizeData[sizeMode][1][1])
-  img = pygame.image.frombuffer(rgb[0:(sizeData[sizeMode][1][0] * sizeData[sizeMode][1][1] * 3)], sizeData[sizeMode][1], 'RGB')
+  yuv2rgb.convert(yuv, rgb, sizeData[0][1][0], sizeData[0][1][1])
+  img = pygame.image.frombuffer(rgb[0:(sizeData[0][1][0] * sizeData[0][1][1] * 3)], sizeData[0][1], 'RGB')
     
-  if img is None or img.get_height() < 240: # Letterbox, clear background
-    screen.fill(0)
-  if img:
-    screen.blit(img,
-      ((320 - img.get_width() ) / 2,
-       (240 - img.get_height()) / 2))
+  #if img is None or img.get_height() < 240: # Letterbox, clear background
+  #  screen.fill(255,0,0)
+  #if img:
+  screen.blit(img, ((320 - img.get_width() ) / 2, (240 - img.get_height()) / 2))
