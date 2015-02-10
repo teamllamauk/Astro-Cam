@@ -57,3 +57,4 @@ while(True):
   #  screen.fill(255,0,0)
   #if img:
   screen.blit(img, ((320 - img.get_width() ) / 2, (240 - img.get_height()) / 2))
+  pygame.display.update()
