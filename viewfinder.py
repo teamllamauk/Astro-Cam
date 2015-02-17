@@ -46,6 +46,8 @@ while(True):
     for event in ev:
         if event.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
+            
+            # Draw rectangle
     
     stream = io.BytesIO() # Capture into in-memory stream
     camera.capture(stream, use_video_port=True, format='raw')
