@@ -31,7 +31,7 @@ rgb = bytearray(320 * 240 * 3)
 yuv = bytearray(320 * 240 * 3 / 2)
 
 pygame.init()
-pygame.mouse.set_visible(False)
+pygame.mouse.set_visible(True)
 screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
  
 camera            = picamera.PiCamera()
@@ -42,15 +42,20 @@ camera.crop       = (0.0, 0.0, 1.0, 1.0)
 # Main
 
 while(True):
-  stream = io.BytesIO() # Capture into in-memory stream
-  camera.capture(stream, use_video_port=True, format='raw')
-  stream.seek(0)
-  stream.readinto(yuv)  # stream -> YUV buffer
-  stream.close()
-  
-  yuv2rgb.convert(yuv, rgb, viewFinder[0], viewFinder[1])
-  
-  img = pygame.image.frombuffer(rgb[0:(viewFinder[0] * viewFinder[1] * 3)], (viewFinder[0], viewFinder[1]), 'RGB')
-  
-  screen.blit(img, ((viewFinder[0] - img.get_width() ) / 2, (viewFinder[1] - img.get_height()) / 2))
-  pygame.display.update()
+    ev = pygame.event.get()
+    for event in ev:
+        if event.type == pygame.MOUSEBUTTONUP:
+            pos = pygame.mouse.get_pos()
+    
+    stream = io.BytesIO() # Capture into in-memory stream
+    camera.capture(stream, use_video_port=True, format='raw')
+    stream.seek(0)
+    stream.readinto(yuv)  # stream -> YUV buffer
+    stream.close()
+    
+    yuv2rgb.convert(yuv, rgb, viewFinder[0], viewFinder[1])
+    
+    img = pygame.image.frombuffer(rgb[0:(viewFinder[0] * viewFinder[1] * 3)], (viewFinder[0], viewFinder[1]), 'RGB')
+    
+    screen.blit(img, ((viewFinder[0] - img.get_width() ) / 2, (viewFinder[1] - img.get_height()) / 2))
+    pygame.display.update()
