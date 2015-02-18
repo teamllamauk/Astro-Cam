@@ -39,7 +39,7 @@ atexit.register(camera.close)
 camera.resolution = (viewFinder[0], viewFinder[1])
 camera.crop       = (0.0, 0.0, 1.0, 1.0)
 
-drawTargetRec = 0
+drawTargetRect = 0
 
 # Main
 
@@ -49,11 +49,11 @@ while(True):
         if event.type == pygame.MOUSEBUTTONUP:
             (mouseX, mouseY) = pygame.mouse.get_pos()
             
-            recSize = (mouseX - 10, mouseY - 10, 20, 20)
-            drawTargetRec = 1
+            drawTargetRectSize = (mouseX - 10, mouseY - 10, 20, 20)
+            drawTargetRect = 1
     
-    if drawTargetRec == 1:
-        pygame.draw.rect(screen, (255,0,0), recSize, 1)
+    if drawTargetRect == 1:
+        pygame.draw.rect(screen, (255,0,0), drawTargetRectSize, 1)
     
     stream = io.BytesIO() # Capture into in-memory stream
     camera.capture(stream, use_video_port=True, format='raw')
