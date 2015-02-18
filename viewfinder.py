@@ -19,7 +19,7 @@ from subprocess import call
 # Globals
 
 # Image size mode
-fullRes = [2592, 1944]
+fullRes = [1296, 972]
 viewFinder = [320, 240]
  
  # Init
@@ -39,15 +39,21 @@ atexit.register(camera.close)
 camera.resolution = (viewFinder[0], viewFinder[1])
 camera.crop       = (0.0, 0.0, 1.0, 1.0)
 
+drawTargetRec = 0
+
 # Main
 
 while(True):
     ev = pygame.event.get()
     for event in ev:
         if event.type == pygame.MOUSEBUTTONUP:
-            pos = pygame.mouse.get_pos()
+            (mouseX, mouseY) = pygame.mouse.get_pos()
             
-            # Draw rectangle
+            recSize = (mouseX - 10, mouseY - 10, 20, 20)
+            drawTargetRec = 1
+    
+    if drawTargetRec == 1:
+        pygame.draw.rect(screen, (255,0,0), recSize, 1)
     
     stream = io.BytesIO() # Capture into in-memory stream
     camera.capture(stream, use_video_port=True, format='raw')
