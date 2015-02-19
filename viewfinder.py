@@ -48,11 +48,16 @@ while(True):
     for event in ev:
         if event.type == pygame.MOUSEBUTTONUP:
             (mouseX, mouseY) = pygame.mouse.get_pos()
+            print 'mouseX - ' + mouseX
+            print 'mouseY - ' + mouseY
             
             drawTargetRectSize = (mouseX - 10, mouseY - 10, 20, 20)
+            print 'drawTargetRectSize - ' + drawTargetRectSize
+            
             drawTargetRect = 1
     
     if drawTargetRect == 1:
+        print 'draw rect'
         pygame.draw.rect(screen, (255,0,0), drawTargetRectSize, 1)
     
     stream = io.BytesIO() # Capture into in-memory stream
