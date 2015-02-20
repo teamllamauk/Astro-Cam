@@ -21,7 +21,9 @@ from subprocess import call
 # Image size mode
 fullRes = [1296, 972]
 viewFinder = [320, 240]
- 
+mouseX = 0
+mouseY = 0
+
  # Init
  
 os.putenv('SDL_VIDEODRIVER', 'fbcon')
@@ -48,17 +50,13 @@ while(True):
     for event in ev:
         if event.type == pygame.MOUSEBUTTONUP:
             (mouseX, mouseY) = pygame.mouse.get_pos()
-            print 'mouseX - ' + mouseX
-            print 'mouseY - ' + mouseY
             
             drawTargetRectSize = (mouseX - 10, mouseY - 10, 20, 20)
-            print 'drawTargetRectSize - ' + drawTargetRectSize
-            
             drawTargetRect = 1
-    
-    if drawTargetRect == 1:
-        print 'draw rect'
-        pygame.draw.rect(screen, (255,0,0), drawTargetRectSize, 1)
+            
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_RETURN or event.key == pygame.K_ENTER:
+                
     
     stream = io.BytesIO() # Capture into in-memory stream
     camera.capture(stream, use_video_port=True, format='raw')
@@ -71,4 +69,8 @@ while(True):
     img = pygame.image.frombuffer(rgb[0:(viewFinder[0] * viewFinder[1] * 3)], (viewFinder[0], viewFinder[1]), 'RGB')
     
     screen.blit(img, ((viewFinder[0] - img.get_width() ) / 2, (viewFinder[1] - img.get_height()) / 2))
+    
+    if drawTargetRect == 1:
+        pygame.draw.rect(screen, (255,0,0), drawTargetRectSize, 1)
+    
     pygame.display.update()
