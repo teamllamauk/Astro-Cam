@@ -56,7 +56,8 @@ while(True):
             
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RETURN or event.key == pygame.K_ENTER:
-                
+                if mouseX > 0 and mouseY > 0:
+                    #Exit function
     
     stream = io.BytesIO() # Capture into in-memory stream
     camera.capture(stream, use_video_port=True, format='raw')
