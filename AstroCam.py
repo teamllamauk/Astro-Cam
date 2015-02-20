@@ -1,63 +1,92 @@
-# Imports
-
-import atexit
-import cPickle as pickle
-import errno
-import fnmatch
-import io
-import os
-import os.path
 import picamera
-import pygame
-import stat
-import threading
-import time
-import yuv2rgb
-from pygame.locals import *
-from subprocess import call  
+from time import sleep
 
-# Globals
+astroCamMode = "setup"
+fps = 0
+recTime = 0 
 
-#sizeMode        =  0      # Image size; default = Large
-sizeData = [ # Camera parameters for different size settings
- # Full res      Viewfinder  Crop window
- [(2592, 1944), (320, 240), (0.0   , 0.0   , 1.0   , 1.0   )], # Large
- [(1920, 1080), (320, 180), (0.1296, 0.2222, 0.7408, 0.5556)], # Med
- [(1440, 1080), (320, 240), (0.2222, 0.2222, 0.5556, 0.5556)]] # Small
- 
- # Init
- 
-os.putenv('SDL_VIDEODRIVER', 'fbcon')
-os.putenv('SDL_FBDEV'      , '/dev/fb1')
+def viewFinder()
+    ev = pygame.event.get()
+    for event in ev:
+        if event.type == pygame.MOUSEBUTTONUP:
+            (mouseX, mouseY) = pygame.mouse.get_pos()
+            
+            drawTargetRectSize = (mouseX - 10, mouseY - 10, 20, 20)
+            drawTargetRect = 1
+            
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_RETURN or event.key == pygame.K_ENTER:
+                if mouseX > 0 and mouseY > 0:
+                    #Exit function
+    
+    stream = io.BytesIO() # Capture into in-memory stream
+    camera.capture(stream, use_video_port=True, format='raw')
+    stream.seek(0)
+    stream.readinto(yuv)  # stream -> YUV buffer
+    stream.close()
+    
+    yuv2rgb.convert(yuv, rgb, viewFinder[0], viewFinder[1])
+    
+    img = pygame.image.frombuffer(rgb[0:(viewFinder[0] * viewFinder[1] * 3)], (viewFinder[0], viewFinder[1]), 'RGB')
+    
+    screen.blit(img, ((viewFinder[0] - img.get_width() ) / 2, (viewFinder[1] - img.get_height()) / 2))
+    
+    if drawTargetRect == 1:
+        pygame.draw.rect(screen, (255,0,0), drawTargetRectSize, 1)
+    
+    pygame.display.update() 
+    
+    
+    
+    
+    
+def takePictures()
+    print 'Take image mode' 
+        # Take Pictures
+    with picamera.PiCamera() as camera:
+        camera.resolution = (1296, 972)
+      
+        # speed to 1/33s and ISO to 100
+        camera.framerate = fps
+        camera.shutter_speed = 30303
+        camera.iso = 100
+      
+        while camera.analog_gain <= 1:
+            time.sleep(0.1)
+        
+        camera.exposure_mode = 'off'
+        g = camera.awb_gains
+        camera.awb_mode = 'off'
+        camera.awb_gains = g
+          
+        # Finally, capture an video
+        print 'Start recording'
+        camera.capture_sequence(['/media/usb0/image%02d.jpg' % i for i in range(int(shots))])
+        print 'End recording'
 
-rgb = bytearray(320 * 240 * 3)
-yuv = bytearray(320 * 240 * 3 / 2)
-
-pygame.init()
-pygame.mouse.set_visible(False)
-screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
- 
-camera            = picamera.PiCamera()
-atexit.register(camera.close)
-camera.resolution = sizeData[0][1]
-camera.crop       = (0.0, 0.0, 1.0, 1.0)
-
-# Select screen section to scan
-
-
-# Main
 
 while(True):
-  stream = io.BytesIO() # Capture into in-memory stream
-  camera.capture(stream, use_video_port=True, format='raw')
-  stream.seek(0)
-  stream.readinto(yuv)  # stream -> YUV buffer
-  stream.close()
-  yuv2rgb.convert(yuv, rgb, sizeData[0][1][0], sizeData[0][1][1])
-  img = pygame.image.frombuffer(rgb[0:(sizeData[0][1][0] * sizeData[0][1][1] * 3)], sizeData[0][1], 'RGB')
+
+    if astroCamMode == "setup":
+        fps = raw_input('How many FPS? ') 
+        shots = raw_input('Number of shots? ')
+        
+        astroCamMode = "viewFinder"
     
-  #if img is None or img.get_height() < 240: # Letterbox, clear background
-  #  screen.fill(255,0,0)
-  #if img:
-  screen.blit(img, ((320 - img.get_width() ) / 2, (240 - img.get_height()) / 2))
-  pygame.display.update()
+    elif astroCamMode == "viewFinder":
+        print 'View finder mode'
+        # View finder code
+        # use mouse to select point on screen
+        viewFinder()
+    
+        astroCamMode = "takeImages"
+    
+    elif astroCamMode == "takeImages":
+        
+        takePictures()
+      
+        astroCamMode = "finished"
+  
+    elif astroCamMode == "finished":
+        print 'Finished'
+        break
