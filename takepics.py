@@ -42,7 +42,7 @@ while(True):
             # Finally, capture an video
             print 'Start recording'
           
-            camera.capture_sequence(['image%02d.jpg' % i for i in range(int(shots))])
+            camera.capture_sequence(['image%02d.png' % i for i in range(int(shots))])
           
             print 'End recording'
       
