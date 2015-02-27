@@ -13,10 +13,13 @@ while(True):
         print 'Take image mode' 
         # Take Pictures
         with picamera.PiCamera() as camera:
+        
             camera.resolution = (1296, 972)
             camera.framerate = 30
             camera.iso = 100
             
+            while camera.analog_gain <= 1:
+                time.sleep(0.1)
             
             camera.shutter_speed = camera.exposure_speed
             camera.exposure_mode = 'off'
@@ -26,16 +29,8 @@ while(True):
             
             # speed to 1/33s
             camera.shutter_speed = 30303
-      
-            while camera.analog_gain <= 1:
-                time.sleep(0.1)
-        
-            camera.exposure_mode = 'off'
-            g = camera.awb_gains
-            camera.awb_mode = 'off'
-            camera.awb_gains = g
-          
-            # Finally, capture an video
+            
+            # capture images
             print 'Start recording'
             
             camera.exposure_compensation(0)
