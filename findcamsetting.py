@@ -20,99 +20,98 @@ while(True):
             
             while camera.analog_gain <= 1:
                 time.sleep(0.1)
+        
+            # speed to 1/33s
+            camera.shutter_speed = 30303
             
-            camera.shutter_speed = camera.exposure_speed
+            #camera.shutter_speed = camera.exposure_speed
             camera.exposure_mode = 'off'
             g = camera.awb_gains
             camera.awb_mode = 'off'
             camera.awb_gains = g
             
-            # speed to 1/33s
-            camera.shutter_speed = 30303
+            
             
             # capture images
             print 'Start recording'
             
-            camera.exposure_compensation(0)
-            camera.capture('image0.png')
+            camera.exposure_compensation = int(0)
+            camera.capture('/media/usb0/image0.png')
             
-            camera.exposure_compensation(1)
-            camera.capture('image1.png')
+            camera.exposure_compensation = int(1)
+            camera.capture('/media/usb0/image1.png')
             
-            camera.exposure_compensation(2)
-            camera.capture('image2.png')
+            camera.exposure_compensation = int(2)
+            camera.capture('/media/usb0/image2.png')
             
-            camera.exposure_compensation(3)
-            camera.capture('image3.png')
+            camera.exposure_compensation = int(3)
+            camera.capture('/media/usb0/image3.png')
             
-            camera.exposure_compensation(4)
-            camera.capture('image4.png')
+            camera.exposure_compensation = int(4)
+            camera.capture('/media/usb0/image4.png')
             
-            camera.exposure_compensation(5)
-            camera.capture('image5.png')
+            camera.exposure_compensation = int(5)
+            camera.capture('/media/usb0/image5.png')
             
-            camera.exposure_compensation(6)
-            camera.capture('image6.png')
+            camera.exposure_compensation = int(6)
+            camera.capture('/media/usb0/image6.png')
             
-            camera.exposure_compensation(7)
-            camera.capture('image7.png')
+            camera.exposure_compensation = int(7)
+            camera.capture('/media/usb0/image7.png')
             
-            camera.exposure_compensation(8)
-            camera.capture('image8.png')
+            camera.exposure_compensation = int(8)
+            camera.capture('/media/usb0/image8.png')
             
-            camera.exposure_compensation(9)
-            camera.capture('image9.png')
+            camera.exposure_compensation = int(9)
+            camera.capture('/media/usb0/image9.png')
             
-            camera.exposure_compensation(9)
-            camera.capture('image9.png')
+            camera.exposure_compensation = int(10)
+            camera.capture('/media/usb0/image10.png')
             
-            camera.exposure_compensation(10)
-            camera.capture('image10.png')
+            camera.exposure_compensation = int(11)
+            camera.capture('/media/usb0/image11.png')
             
-            camera.exposure_compensation(11)
-            camera.capture('image11.png')
+            camera.exposure_compensation = int(12)
+            camera.capture('/media/usb0/image12.png')
             
-            camera.exposure_compensation(12)
-            camera.capture('image12.png')
+            camera.exposure_compensation = int(13)
+            camera.capture('/media/usb0/image13.png')
             
-            camera.exposure_compensation(13)
-            camera.capture('image13.png')
+            camera.exposure_compensation = int(14)
+            camera.capture('/media/usb0/image14.png')
             
-            camera.exposure_compensation(14)
-            camera.capture('image14.png')
+            camera.exposure_compensation = int(15)
+            camera.capture('/media/usb0/image15.png')
             
-            camera.exposure_compensation(15)
-            camera.capture('image15.png')
+            camera.exposure_compensation = int(16)
+            camera.capture('/media/usb0/image16.png')
             
-            camera.exposure_compensation(16)
-            camera.capture('image16.png')
+            camera.exposure_compensation = int(17)
+            camera.capture('/media/usb0/image17.png')
             
-            camera.exposure_compensation(17)
-            camera.capture('image17.png')
+            camera.exposure_compensation = int(18)
+            camera.capture('/media/usb0/image18.png')
             
-            camera.exposure_compensation(18)
-            camera.capture('image18.png')
+            camera.exposure_compensation = int(19)
+            camera.capture('/media/usb0/image19.png')
             
-            camera.exposure_compensation(19)
-            camera.capture('image19.png')
+            camera.exposure_compensation = int(20)
+            camera.capture('/media/usb0/image20.png')
             
-            camera.exposure_compensation(20)
-            camera.capture('image20.png')
+            camera.exposure_compensation = int(21)
+            camera.capture('/media/usb0/image21.png')
             
-            camera.exposure_compensation(21)
-            camera.capture('image21.png')
+            camera.exposure_compensation = int(22)
+            camera.capture('/media/usb0/image22.png')
             
-            camera.exposure_compensation(22)
-            camera.capture('image22.png')
+            camera.exposure_compensation = int(23)
+            camera.capture('/media/usb0/image23.png')
             
-            camera.exposure_compensation(23)
-            camera.capture('image23.png')
+            camera.exposure_compensation = int(24)
+            camera.capture('/media/usb0/image24.png')
             
-            camera.exposure_compensation(24)
-            camera.capture('image24.png')
-            
-            camera.exposure_compensation(25)
-            camera.capture('image25.png')
+            camera.exposure_compensation = int(25)
+            camera.capture('/media/usb0/image25.png')
           
 
 
