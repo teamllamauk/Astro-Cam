@@ -20,7 +20,7 @@ while(True):
             camera.iso = 100
             
             # speed to 1/33s
-            camera.shutter_speed = 30303
+            camera.shutter_speed = 303030
             
             while camera.analog_gain <= 1:
                 time.sleep(0.1)
