@@ -19,19 +19,17 @@ while(True):
             camera.framerate = 30
             camera.iso = 100
             
-            while camera.analog_gain <= 1:
-                time.sleep(0.1)
-        
             # speed to 1/33s
             camera.shutter_speed = 30303
+            
+            while camera.analog_gain <= 1:
+                time.sleep(0.1)
             
             #camera.shutter_speed = camera.exposure_speed
             camera.exposure_mode = 'off'
             g = camera.awb_gains
             camera.awb_mode = 'off'
             camera.awb_gains = g
-            
-            
             
             # capture images
             print 'Start recording'
